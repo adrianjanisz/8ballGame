@@ -1,9 +1,0 @@
-Demo Commands 
-
-Export command: 
-
-export LD_LIBRARY_PATH=`pwd`
-
-Server start command: 
-
-python3 server.py 58518
