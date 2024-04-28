@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="700" height="1375" viewBox="-25 -25 1400 2750"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="1350" height="2700" x="0" y="0" fill="#C0D0C0" /><rect width="1400" height="25" x="-25" y="-25" fill="darkgreen" />
+<rect width="1400" height="25" x="-25" y="2700" fill="darkgreen" />
+<rect width="25" height="2750" x="-25" y="-25" fill="darkgreen" />
+<rect width="25" height="2750" x="1350" y="-25" fill="darkgreen" />
+<circle cx="0" cy="0" r="114" fill="black" />
+<circle cx="0" cy="1350" r="114" fill="black" />
+<circle cx="0" cy="2700" r="114" fill="black" />
+<circle cx="1350" cy="0" r="114" fill="black" />
+<circle cx="1350" cy="1350" r="114" fill="black" />
+<circle cx="1350" cy="2700" r="114" fill="black" />
+<circle cx="675" cy="2100" r="28" fill="WHITE" />
+<circle cx="674" cy="800" r="28" fill="YELLOW" />
+<circle cx="710" cy="744" r="28" fill="BLUE" />
+<circle cx="640" cy="745" r="28" fill="BROWN" />
+<clipPath id="top-clip-15">
+  <rect x="611" y="716" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-15">
+  <rect x="611" y="754" width="57" height="19" />
+</clipPath>
+<circle cx="640" cy="745" r="28" fill="white" clip-path="url(#top-clip-15)" />
+<circle cx="640" cy="745" r="28" fill="white" clip-path="url(#bottom-clip-15)" />
+<circle cx="740" cy="688" r="28" fill="GREEN" />
+<clipPath id="top-clip-14">
+  <rect x="711" y="659" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-14">
+  <rect x="711" y="697" width="57" height="19" />
+</clipPath>
+<circle cx="740" cy="688" r="28" fill="white" clip-path="url(#top-clip-14)" />
+<circle cx="740" cy="688" r="28" fill="white" clip-path="url(#bottom-clip-14)" />
+<circle cx="675" cy="689" r="28" fill="BLACK" />
+<circle cx="610" cy="690" r="28" fill="RED" />
+<circle cx="775" cy="632" r="28" fill="PURPLE" />
+<circle cx="710" cy="633" r="28" fill="ORANGE" />
+<clipPath id="top-clip-13">
+  <rect x="681" y="604" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-13">
+  <rect x="681" y="642" width="57" height="19" />
+</clipPath>
+<circle cx="710" cy="633" r="28" fill="white" clip-path="url(#top-clip-13)" />
+<circle cx="710" cy="633" r="28" fill="white" clip-path="url(#bottom-clip-13)" />
+<circle cx="640" cy="634" r="28" fill="ORANGE" />
+<circle cx="575" cy="635" r="28" fill="PURPLE" />
+<clipPath id="top-clip-12">
+  <rect x="546" y="606" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-12">
+  <rect x="546" y="644" width="57" height="19" />
+</clipPath>
+<circle cx="575" cy="635" r="28" fill="white" clip-path="url(#top-clip-12)" />
+<circle cx="575" cy="635" r="28" fill="white" clip-path="url(#bottom-clip-12)" />
+<circle cx="805" cy="576" r="28" fill="RED" />
+<clipPath id="top-clip-11">
+  <rect x="776" y="547" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-11">
+  <rect x="776" y="585" width="57" height="19" />
+</clipPath>
+<circle cx="805" cy="576" r="28" fill="white" clip-path="url(#top-clip-11)" />
+<circle cx="805" cy="576" r="28" fill="white" clip-path="url(#bottom-clip-11)" />
+<circle cx="740" cy="577" r="28" fill="GREEN" />
+<circle cx="675" cy="578" r="28" fill="BLUE" />
+<clipPath id="top-clip-10">
+  <rect x="646" y="549" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-10">
+  <rect x="646" y="587" width="57" height="19" />
+</clipPath>
+<circle cx="675" cy="578" r="28" fill="white" clip-path="url(#top-clip-10)" />
+<circle cx="675" cy="578" r="28" fill="white" clip-path="url(#bottom-clip-10)" />
+<circle cx="610" cy="579" r="28" fill="BROWN" />
+<circle cx="545" cy="580" r="28" fill="YELLOW" />
+<clipPath id="top-clip-9">
+  <rect x="516" y="551" width="57" height="19" />
+</clipPath>
+<clipPath id="bottom-clip-9">
+  <rect x="516" y="589" width="57" height="19" />
+</clipPath>
+<circle cx="545" cy="580" r="28" fill="white" clip-path="url(#top-clip-9)" />
+<circle cx="545" cy="580" r="28" fill="white" clip-path="url(#bottom-clip-9)" />
+</svg>

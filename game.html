@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>8-ball Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-color: rgb(206, 168, 124);
+        }
+        #poolTableBackground {
+            display: flex;
+            position: absolute;
+            border: 5px solid rgb(2, 90, 2);
+            background-color: rgb(255, 255, 255);
+            pointer-events: none;
+        }
+        #poolTableContainer {
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+        }
+        #poolTableContainer svg{
+            width: 50%;
+            height: auto;
+        }
+        #shootInputCanvas {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+        }
+        #inputPlayerNames {
+            position: fixed;
+            top: 370px;
+            left: 150px;
+            width: 300px;
+            padding: 15px;
+            border-radius: 0px 0px 10px 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 30px;
+            background-color: rgb(76, 176, 80);
+            color: white;
+            z-index: 4;
+        }
+        #playerInputBox {
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 270px;
+            height: 40px;
+            font-size: 20px;
+            padding: 5px 5px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px black;
+        }
+        #submitButton {
+            cursor: pointer;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 28px;
+            background-color: rgb(2, 90, 2);
+            color: white;
+            border-radius: 10px;
+            border: none; 
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+        #restartButton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            font-size: 20px;
+            background-color: rgb(76, 176, 80);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #playerNamesDisplay {
+            position: fixed;
+            top: 370px;
+            left: 150px;
+            width: 300px;
+            padding: 15px;
+            border-radius: 0px 0px 10px 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 30px;
+            background-color: rgb(76, 176, 80);
+            color: white;
+            z-index: 3;
+        }
+        #playerTitle {
+            position: fixed;
+            top: 300px;
+            left: 150px;
+            width: 300px;
+            height: 70px;
+            padding: 15px;
+            border-radius: 10px 10px 0px 0px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 40px;
+            background-color: rgb(76, 176, 80);
+            color: white;
+            z-index: 3;
+        }
+        #playerSplitDisplay {
+            position: fixed;
+            top: 550px;
+            left: 150px;
+            width: 300px;
+            height: 100px;
+            padding: 15px;
+            border-radius: 10px 10px 10px 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 40px;
+            background-color: rgb(76, 176, 80);
+            color: white;
+            z-index: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="playerTitle">Players:</div>
+    
+    <div id="inputPlayerNames">
+        <div class="playerInputBox">
+            <label for="player1Input">Input Player 1 Name:</label>
+            <input type="text" id="player1Input" name="player1">
+        </div>
+        <div class="playerInputBox">
+            <label for="player2Input">Input Player 2 Name:</label>
+            <input type="text" id="player2Input" name="player2">
+        </div>
+        <button id="submitButton">Submit</button>
+    </div>
+
+    <div id="playerNamesDisplay"></div>
+
+    <div id="playerSplitDisplay"></div>
+
+    <button id="restartButton">Restart Game</button>
+
+    <div id = poolTableBackground>        
+        <svg width="800" height="1100"></svg>
+    </div>  
+
+    <canvas id="shootInputCanvas" width="800" height="1100"></canvas>
+
+    <div id="poolTableContainer">
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+        <svg width="700" height="1375" viewBox="-25 -25 1400 2750"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+            <rect width="1350" height="2700" x="0" y="0" fill="#C0D0C0" /><rect width="1400" height="25" x="-25" y="-25" fill="darkgreen" />
+            <rect width="1400" height="25" x="-25" y="2700" fill="darkgreen" />
+            <rect width="25" height="2750" x="-25" y="-25" fill="darkgreen" />
+            <rect width="25" height="2750" x="1350" y="-25" fill="darkgreen" />
+            <circle cx="0" cy="0" r="114" fill="black" />
+            <circle cx="0" cy="1350" r="114" fill="black" />
+            <circle cx="0" cy="2700" r="114" fill="black" />
+            <circle cx="1350" cy="0" r="114" fill="black" />
+            <circle cx="1350" cy="1350" r="114" fill="black" />
+            <circle cx="1350" cy="2700" r="114" fill="black" />
+            <circle cx="675" cy="2100" r="28" fill="WHITE" />
+            <circle cx="674" cy="800" r="28" fill="YELLOW" />
+            <circle cx="710" cy="744" r="28" fill="BLUE" />
+            <circle cx="640" cy="745" r="28" fill="BROWN" />
+            <clipPath id="top-clip-15">
+            <rect x="611" y="716" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-15">
+            <rect x="611" y="754" width="57" height="19" />
+            </clipPath>
+            <circle cx="640" cy="745" r="28" fill="white" clip-path="url(#top-clip-15)" />
+            <circle cx="640" cy="745" r="28" fill="white" clip-path="url(#bottom-clip-15)" />
+            <circle cx="740" cy="688" r="28" fill="GREEN" />
+            <clipPath id="top-clip-14">
+            <rect x="711" y="659" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-14">
+            <rect x="711" y="697" width="57" height="19" />
+            </clipPath>
+            <circle cx="740" cy="688" r="28" fill="white" clip-path="url(#top-clip-14)" />
+            <circle cx="740" cy="688" r="28" fill="white" clip-path="url(#bottom-clip-14)" />
+            <circle cx="675" cy="689" r="28" fill="BLACK" />
+            <circle cx="610" cy="690" r="28" fill="RED" />
+            <circle cx="775" cy="632" r="28" fill="PURPLE" />
+            <circle cx="710" cy="633" r="28" fill="ORANGE" />
+            <clipPath id="top-clip-13">
+            <rect x="681" y="604" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-13">
+            <rect x="681" y="642" width="57" height="19" />
+            </clipPath>
+            <circle cx="710" cy="633" r="28" fill="white" clip-path="url(#top-clip-13)" />
+            <circle cx="710" cy="633" r="28" fill="white" clip-path="url(#bottom-clip-13)" />
+            <circle cx="640" cy="634" r="28" fill="ORANGE" />
+            <circle cx="575" cy="635" r="28" fill="PURPLE" />
+            <clipPath id="top-clip-12">
+            <rect x="546" y="606" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-12">
+            <rect x="546" y="644" width="57" height="19" />
+            </clipPath>
+            <circle cx="575" cy="635" r="28" fill="white" clip-path="url(#top-clip-12)" />
+            <circle cx="575" cy="635" r="28" fill="white" clip-path="url(#bottom-clip-12)" />
+            <circle cx="805" cy="576" r="28" fill="RED" />
+            <clipPath id="top-clip-11">
+            <rect x="776" y="547" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-11">
+            <rect x="776" y="585" width="57" height="19" />
+            </clipPath>
+            <circle cx="805" cy="576" r="28" fill="white" clip-path="url(#top-clip-11)" />
+            <circle cx="805" cy="576" r="28" fill="white" clip-path="url(#bottom-clip-11)" />
+            <circle cx="740" cy="577" r="28" fill="GREEN" />
+            <circle cx="675" cy="578" r="28" fill="BLUE" />
+            <clipPath id="top-clip-10">
+            <rect x="646" y="549" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-10">
+            <rect x="646" y="587" width="57" height="19" />
+            </clipPath>
+            <circle cx="675" cy="578" r="28" fill="white" clip-path="url(#top-clip-10)" />
+            <circle cx="675" cy="578" r="28" fill="white" clip-path="url(#bottom-clip-10)" />
+            <circle cx="610" cy="579" r="28" fill="BROWN" />
+            <circle cx="545" cy="580" r="28" fill="YELLOW" />
+            <clipPath id="top-clip-9">
+            <rect x="516" y="551" width="57" height="19" />
+            </clipPath>
+            <clipPath id="bottom-clip-9">
+            <rect x="516" y="589" width="57" height="19" />
+            </clipPath>
+            <circle cx="545" cy="580" r="28" fill="white" clip-path="url(#top-clip-9)" />
+            <circle cx="545" cy="580" r="28" fill="white" clip-path="url(#bottom-clip-9)" />
+        </svg>             
+    </div>
+
+    <script>
+        // Player names 
+        var player1 = '';
+        var player2 = '';
+        var gameStatus = 1;
+        var restartGameValue = 0;
+        var lowOrHigh = 0;
+        var neverAgain = 0;
+        var whichPlayersTurn = Math.round(Math.random());
+        var lowPlayer = '';
+        var highPlayer = '';
+
+        $('#playerSplitDisplay').html(`High: <br> Low: `);
+        $('#playerSplitDisplay').hide();
+
+        // Initialize the game 
+        $(document).ready(function() {
+            shootingFunction();
+            
+            // Restart game button 
+            $('#restartButton').click(function() {
+                restartGameValue = 1;
+                $('#poolTableContainer').html(`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+                "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                <svg width="700" height="1375" viewBox="-25 -25 1400 2750"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <rect width="1350" height="2700" x="0" y="0" fill="#C0D0C0" /><rect width="1400" height="25" x="-25" y="-25" fill="darkgreen" />
+                    <rect width="1400" height="25" x="-25" y="2700" fill="darkgreen" />
+                    <rect width="25" height="2750" x="-25" y="-25" fill="darkgreen" />
+                    <rect width="25" height="2750" x="1350" y="-25" fill="darkgreen" />
+                    <circle cx="0" cy="0" r="114" fill="black" />
+                    <circle cx="0" cy="1350" r="114" fill="black" />
+                    <circle cx="0" cy="2700" r="114" fill="black" />
+                    <circle cx="1350" cy="0" r="114" fill="black" />
+                    <circle cx="1350" cy="1350" r="114" fill="black" />
+                    <circle cx="1350" cy="2700" r="114" fill="black" />
+                    <circle cx="675" cy="2100" r="28" fill="WHITE" />
+                    <circle cx="674" cy="800" r="28" fill="YELLOW" />
+                    <circle cx="710" cy="744" r="28" fill="BLUE" />
+                    <circle cx="640" cy="745" r="28" fill="BROWN" />
+                    <clipPath id="top-clip-15">
+                    <rect x="611" y="716" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-15">
+                    <rect x="611" y="754" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="640" cy="745" r="28" fill="white" clip-path="url(#top-clip-15)" />
+                    <circle cx="640" cy="745" r="28" fill="white" clip-path="url(#bottom-clip-15)" />
+                    <circle cx="740" cy="688" r="28" fill="GREEN" />
+                    <clipPath id="top-clip-14">
+                    <rect x="711" y="659" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-14">
+                    <rect x="711" y="697" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="740" cy="688" r="28" fill="white" clip-path="url(#top-clip-14)" />
+                    <circle cx="740" cy="688" r="28" fill="white" clip-path="url(#bottom-clip-14)" />
+                    <circle cx="675" cy="689" r="28" fill="BLACK" />
+                    <circle cx="610" cy="690" r="28" fill="RED" />
+                    <circle cx="775" cy="632" r="28" fill="PURPLE" />
+                    <circle cx="710" cy="633" r="28" fill="ORANGE" />
+                    <clipPath id="top-clip-13">
+                    <rect x="681" y="604" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-13">
+                    <rect x="681" y="642" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="710" cy="633" r="28" fill="white" clip-path="url(#top-clip-13)" />
+                    <circle cx="710" cy="633" r="28" fill="white" clip-path="url(#bottom-clip-13)" />
+                    <circle cx="640" cy="634" r="28" fill="ORANGE" />
+                    <circle cx="575" cy="635" r="28" fill="PURPLE" />
+                    <clipPath id="top-clip-12">
+                    <rect x="546" y="606" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-12">
+                    <rect x="546" y="644" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="575" cy="635" r="28" fill="white" clip-path="url(#top-clip-12)" />
+                    <circle cx="575" cy="635" r="28" fill="white" clip-path="url(#bottom-clip-12)" />
+                    <circle cx="805" cy="576" r="28" fill="RED" />
+                    <clipPath id="top-clip-11">
+                    <rect x="776" y="547" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-11">
+                    <rect x="776" y="585" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="805" cy="576" r="28" fill="white" clip-path="url(#top-clip-11)" />
+                    <circle cx="805" cy="576" r="28" fill="white" clip-path="url(#bottom-clip-11)" />
+                    <circle cx="740" cy="577" r="28" fill="GREEN" />
+                    <circle cx="675" cy="578" r="28" fill="BLUE" />
+                    <clipPath id="top-clip-10">
+                    <rect x="646" y="549" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-10">
+                    <rect x="646" y="587" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="675" cy="578" r="28" fill="white" clip-path="url(#top-clip-10)" />
+                    <circle cx="675" cy="578" r="28" fill="white" clip-path="url(#bottom-clip-10)" />
+                    <circle cx="610" cy="579" r="28" fill="BROWN" />
+                    <circle cx="545" cy="580" r="28" fill="YELLOW" />
+                    <clipPath id="top-clip-9">
+                    <rect x="516" y="551" width="57" height="19" />
+                    </clipPath>
+                    <clipPath id="bottom-clip-9">
+                    <rect x="516" y="589" width="57" height="19" />
+                    </clipPath>
+                    <circle cx="545" cy="580" r="28" fill="white" clip-path="url(#top-clip-9)" />
+                    <circle cx="545" cy="580" r="28" fill="white" clip-path="url(#bottom-clip-9)" />
+                </svg>`);
+                whichPlayersTurn = Math.round(Math.random());
+                sendData(0, 0, player1, player2, restartGameValue, whichPlayersTurn, lowPlayer, highPlayer);
+                restartGameValue = 0;
+                neverAgain = 0;
+                $('#playerSplitDisplay').html(`High: <br> Low: `);
+                shootingFunction();
+            });
+        });
+
+        function shootingFunction() {
+            // Set up canvas 
+            var gameCanvas = document.getElementById('shootInputCanvas');
+            var gameDrawing = gameCanvas.getContext('2d');
+            
+            // Drawing variables 
+            var isPlayerDrawing = false;
+            var startX = 0;
+            var startY = 0;
+
+            // New variables to hold the differences
+            var xDifference = 0;
+            var yDifference = 0;
+            
+            // Cue stick design 
+            gameDrawing.strokeStyle = 'brown'; 
+            gameDrawing.lineWidth = 5; 
+            var maxCueLength = 200; 
+
+            // Draw line DONE TO THIS POINT 
+            function drawCue(x, y) {
+                var xDisplacement = x - startX;
+                var yDisplacement = y - startY;
+                var cueLength = Math.sqrt(xDisplacement * xDisplacement + yDisplacement * yDisplacement);
+                
+                // If cursor exceeds max cue length 
+                if (cueLength > maxCueLength) {
+                    var cueAngle = Math.atan2(yDisplacement, xDisplacement);
+                    x = startX + Math.cos(cueAngle) * maxCueLength;
+                    y = startY + Math.sin(cueAngle) * maxCueLength;
+                }
+
+                // Update the differences 
+                xDifference = x - startX;
+                yDifference = y - startY;
+
+                // Clear the canvas and draw the new line 
+                gameDrawing.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+                gameDrawing.beginPath();
+                gameDrawing.moveTo(startX, startY);
+                gameDrawing.lineTo(x, y);
+                gameDrawing.stroke();
+            }
+
+            // User click on white ball 
+            $("circle[fill='WHITE']").on('click', function(e) {
+                e.stopPropagation();
+                if (!isPlayerDrawing) {
+                    var boundingRectangle = gameCanvas.getBoundingClientRect();
+                    startX = e.clientX - boundingRectangle.left;
+                    startY = e.clientY - boundingRectangle.top;
+                    isPlayerDrawing = true;
+                }
+            });
+
+            // User dragging cursor around 
+            $(document).on('mousemove', function(e) {
+                if (!isPlayerDrawing) return;
+                var boundingRectangle = gameCanvas.getBoundingClientRect();
+                var mousePositionX = e.clientX - boundingRectangle.left;
+                var mousePositionY = e.clientY - boundingRectangle.top;
+                drawCue(mousePositionX, mousePositionY);
+            });
+
+            // User clicks again to shoot the cue ball 
+            $(document).on('click', function(e) {
+                if (isPlayerDrawing) {
+                    isPlayerDrawing = false;
+                    gameDrawing.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+                    sendData(xDifference, yDifference, player1, player2, restartGameValue, whichPlayersTurn, lowPlayer, highPlayer);
+                }
+            });
+
+            // Submit button for player inputted names 
+            $('#submitButton').click(function(e) {
+                // Get player names from input boxes 
+                player1 = $('#player1Input').val();
+                player2 = $('#player2Input').val();
+
+                // Display player names on page and hide input fields 
+                if (whichPlayersTurn == 0) {
+                    $('#playerNamesDisplay').html(`<strong>Player 1: ${player1}</strong> <br> Player 2: ${player2} <br> (Bold indicates turn)`);
+                    $('#inputPlayerNames').hide();
+                }
+                else {
+                    $('#playerNamesDisplay').html(`Player 1: ${player1} <br> <strong>Player 2: ${player2}</strong> <br> (Bold indicates turn)`);
+                    $('#inputPlayerNames').hide();
+                }
+                $('#playerSplitDisplay').show();
+            });
+        }
+
+        // Function to set players 
+        function setPlayers(p1, p2) {
+            lowPlayer = p1;
+            highPlayer = p2;
+        }
+
+        // Function to set turn 
+        function setTurn(which) {
+            whichPlayersTurn = which;
+        }
+
+        // Function to send cue info and player info to server 
+        function sendData(xDifference, yDifference, player1, player2, restartGameValue, whichPlayersTurn, lowPlayer, highPlayer) {
+            // Data being sent to server 
+            const data = {
+                xDiff: xDifference,
+                yDiff: yDifference,
+                p1: player1,
+                p2: player2,
+                restart: restartGameValue,
+                turn: whichPlayersTurn,
+                lp: lowPlayer,
+                hp: highPlayer
+            };
+            
+            $.ajax({
+                url: '/game.html', type: 'POST', contentType: 'application/json',  data: JSON.stringify(data), success: function(result) {
+                    console.log(result);
+                    // Split returned data from server 
+                    var svgs = result[0].split('</svg>');
+                    gameStatus = result[1];
+                    lowOrHigh = result[2];
+                    var whichPlayersTurnTemp = result[3];
+                    setTurn(whichPlayersTurnTemp);
+
+                    // Update visual turn display 
+                    if (whichPlayersTurnTemp == 0) {
+                        $('#playerNamesDisplay').html(`<strong>Player 1: ${player1}</strong> <br> Player 2: ${player2} <br> (Bold indicates turn)`);
+                        // Assigning players to low and high (Only once) 
+                        if (neverAgain == 0) {
+                            if (lowOrHigh >= 1 && lowOrHigh <= 7) {
+                                $('#playerSplitDisplay').html(`High: ${player2} <br> Low: ${player1}`);
+                                neverAgain = 1;
+                                setPlayers(player1, player2);
+                            }
+                            else if (lowOrHigh >= 9 && lowOrHigh <= 15) {
+                                $('#playerSplitDisplay').html(`High: ${player1} <br> Low: ${player2}`);
+                                neverAgain = 1;
+                                setPlayers(player2, player1);
+                            }
+                        }
+                    }
+                    else {
+                        $('#playerNamesDisplay').html(`Player 1: ${player1} <br> <strong>Player 2: ${player2}</strong> <br> (Bold indicates turn)`);
+                        // Assigning players to low and high (Only once) 
+                        if (neverAgain == 0) {
+                            if (lowOrHigh >= 1 && lowOrHigh <= 7) {
+                                $('#playerSplitDisplay').html(`High: ${player1} <br> Low: ${player2}`);
+                                neverAgain = 1;
+                                setPlayers(player2, player1);
+                            }
+                            else if (lowOrHigh >= 9 && lowOrHigh <= 15) {
+                                $('#playerSplitDisplay').html(`High: ${player2} <br> Low: ${player1}`);
+                                neverAgain = 1;
+                                setPlayers(player1, player2);
+                            }
+                        }
+                    }
+
+                    // For animation 
+                    if (svgs.length > 1) {
+                        var index = 0;
+                        var delay = 5;
+
+                        // Start the animation 
+                        animateSvgs();
+
+                        // Animation function 
+                        function animateSvgs() {
+                            if (index < svgs.length - 1) {
+                                var displaySvg = svgs[index] + '</svg>'; 
+                                $('#poolTableContainer').html(displaySvg);
+                                index++;
+                                setTimeout(animateSvgs, delay);
+                            }
+                            else {
+                                if (gameStatus == 0) {
+                                    if (whichPlayersTurnTemp == 0) {
+                                        alert("The game is over.\n Player " + player1 + " sunk all their balls.\n Player " + player1 + " wins!");
+                                    }
+                                    else {
+                                        alert("The game is over.\n Player " + player2 + " sunk all their balls.\n Player " + player2 + " wins!");
+                                    }
+                                }
+                                else if (gameStatus == 2) {
+                                    if (whichPlayersTurnTemp == 0) {
+                                        alert("The game is over. 8-ball was sunk too early.\nPlayer " + player2 + " wins!");
+                                    }
+                                    else {
+                                        alert("The game is over. 8-ball was sunk too early.\nPlayer " + player1 + " wins!");
+                                    }
+                                }
+                                else {
+                                     // Game is ready for next shot 
+                                    shootingFunction();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
